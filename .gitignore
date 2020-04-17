@@ -1,6 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
-**/.idea
-**/*.iml
+.idea
+*.iml
+**/.mvn
+**/.gitignore
 **/mvnw
 **/mvnw.cmd
-**/.mvn

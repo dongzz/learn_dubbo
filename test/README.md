@@ -24,7 +24,6 @@
 ###实现工程（dongz-spring-boot-starter-autoconfig)
 具体实现starter功能
 -   删除多余依赖工程，只保留 spring-boot-starter： 所有starter都需要引入的基本配置
-    -   @ConfigurationProperties
         结合配置类完成一些相应配置
 ```xml
         <dependencies>
@@ -35,6 +34,7 @@
         </dependencies>
 ```
 -   创建配置 Properties类绑定属性
+    -   @ConfigurationProperties
 ```java
 //绑定配置文件中所有以dongz.test开头的配置项
 //使用@ConfigurationProperties  必须开启@EnableConfigurationProperties   

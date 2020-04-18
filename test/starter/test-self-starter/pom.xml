@@ -23,6 +23,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <!--引入自定义starter-->
         <dependency>
             <groupId>com.dongz</groupId>

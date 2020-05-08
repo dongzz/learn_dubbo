@@ -20,7 +20,7 @@ public class DemoService implements ApplicationContextAware {
         this.applicationContext = applicationContext;
     }
 
-    public String test() {
-        return applicationContext.getEnvironment().getProperty("key1");
+    public String test(String num) {
+        return applicationContext.getEnvironment().getProperty("key" + num);
     }
 }

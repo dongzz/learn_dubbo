@@ -1,6 +1,7 @@
 package com.dongz.springboot.learn.controller;
 
 import com.dongz.springboot.learn.service.DemoService;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +19,8 @@ public class DemoController {
     @Resource
     DemoService service;
 
-    @RequestMapping("test")
-    public String test() {
-        return service.test();
+    @RequestMapping("test/{num}")
+    public String test(@PathVariable("num") String num) {
+        return service.test(num);
     }
 }

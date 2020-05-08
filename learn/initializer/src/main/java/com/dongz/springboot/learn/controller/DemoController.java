@@ -1,7 +1,10 @@
 package com.dongz.springboot.learn.controller;
 
+import com.dongz.springboot.learn.service.DemoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * @author dong
@@ -12,8 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class DemoController {
 
+    @Resource
+    DemoService service;
+
     @RequestMapping("test")
     public String test() {
-        return "";
+        return service.test();
     }
 }

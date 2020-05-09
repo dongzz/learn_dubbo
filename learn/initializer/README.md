@@ -62,8 +62,6 @@ org.springframework.context.ApplicationContextInitializer=com.dongz.springboot.l
 ### 方法二
 -   实现ApplicationContextInitializer接口
     同上
--   实现ApplicationContextAware接口，并重写setApplicationContext方法
-    同上
 -   application
 ```java
 public class LearnApplication {
@@ -75,3 +73,17 @@ public class LearnApplication {
     }     
 }
 ```
+### 方法三
+-   实现ApplicationContextInitializer接口
+    同上
+-   yml
+```yaml
+context:
+  initializer:
+    classes: com.dongz.springboot.learn.initializer.ThirdInitializer
+
+```
+## 注意
+-   都要实现ApplicationContextInitialzer接口
+-   Order值越小，优先级越高
+-   application.properties 优先级高于其他

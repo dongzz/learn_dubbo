@@ -3,7 +3,7 @@ package com.dongz.springboot.learn.multicaster;
 import com.dongz.springboot.learn.event.WeatherEvent;
 import com.dongz.springboot.learn.listener.WeatherListener;
 
-import java.util.ArrayList;
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -13,7 +13,8 @@ import java.util.List;
  */
 public abstract class AbstractEventMulticaster implements EventMulticaster {
 
-    private List<WeatherListener> listenerList = new ArrayList<>();
+    @Resource
+    private List<WeatherListener> listenerList ;
 
     @Override
     public void multicastEvent(WeatherEvent event) {

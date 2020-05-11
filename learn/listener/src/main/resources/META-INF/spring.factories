@@ -1,0 +1,1 @@
+org.springframework.context.ApplicationListener=com.dongz.springboot.learnSpringbootListener.listener.FirstListenter,com.dongz.springboot.learnSpringbootListener.listener.FourthListenter

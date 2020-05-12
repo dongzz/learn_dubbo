@@ -3,6 +3,8 @@ package com.dongz.springcloud.learn.service;
 import com.dongz.springcloud.learn.xml.Student;
 import com.dongz.springcloud.learn.xml.factory.Animal;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * @author dong
@@ -13,7 +15,8 @@ import lombok.Data;
 public class HelloService {
 
     private Student student;
-
+    @Autowired
+    @Qualifier("myCat")
     private Animal animal;
 
     public String hello() {

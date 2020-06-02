@@ -23,6 +23,6 @@ public class MyWebApplicationInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic app = servletContext.addServlet("app", dispatcherServlet);
         app.setLoadOnStartup(1);
         // dispatchServlet访问路径
-        app.addMapping("*.do");
+        app.addMapping("/");
     }
 }

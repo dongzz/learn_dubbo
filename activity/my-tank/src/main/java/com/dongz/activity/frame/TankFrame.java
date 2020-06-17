@@ -1,7 +1,8 @@
 package com.dongz.activity.frame;
 
 import com.dongz.activity.emnu.Direction;
-import com.dongz.activity.entity.Tank;
+import com.dongz.activity.emnu.Group;
+import com.dongz.activity.obj.Tank;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -19,9 +20,9 @@ public class TankFrame extends Frame {
         this.setSize(sizeX, sizeY);
         this.setTitle("tank war");
         // 我方tank
-        tank = new Tank(100, 100, Direction.Up, "p1tank", false);
+        tank = new Tank(100, 100, Direction.Up, false, Group.P1);
         // 地方tank
-        enemy = new Tank(200, 200, Direction.Up, "enemy0", false);
+        enemy = new Tank(200, 200, Direction.Up, false, Group.ENEMY4);
         //增加键盘监听事件
         this.addKeyListener(new TankKeyLister());
     }

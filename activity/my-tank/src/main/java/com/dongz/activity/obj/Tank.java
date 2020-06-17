@@ -2,6 +2,7 @@ package com.dongz.activity.obj;
 
 import com.dongz.activity.emnu.Direction;
 import com.dongz.activity.emnu.Group;
+import com.dongz.activity.frame.TankFrame;
 import lombok.Data;
 
 import java.awt.*;
@@ -11,6 +12,8 @@ import java.awt.image.BufferedImage;
 @Data
 public class Tank extends BaseObj {
     private boolean Dl, Dr, Du, Dd;
+
+    private Bullet bullet;
 
     public Tank(int x, int y, Direction dir, boolean moving, Group group) {
         this.x = x;
@@ -45,9 +48,16 @@ public class Tank extends BaseObj {
             case KeyEvent.VK_DOWN:
                 Dd = move;
                 break;
+            case KeyEvent.VK_CONTROL:
+                this.fire();
+                break;
             default:
                 break;
         }
+    }
+
+    private void fire() {
+        TankFrame.me.bullet = new Bullet(this.x, this.y, this.dir, Group.BULLET);
     }
 
     private void switchDir() {
@@ -77,20 +87,23 @@ public class Tank extends BaseObj {
         Dd = false;
     }
 
-    // 旋转图片
-    private BufferedImage rotateImage(final BufferedImage img, final int degree) {
-        int width = img.getWidth();
-        int height = img.getHeight();
-        int transparency = img.getColorModel().getTransparency();
-        BufferedImage image;
-        Graphics2D graphics2D;
 
-        (graphics2D = (image = new BufferedImage(width, height, transparency)).createGraphics())
-                .setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
-        graphics2D.rotate(Math.toRadians(degree), width / 2, height / 2);
-        graphics2D.drawImage(img, 0, 0, null);
-        graphics2D.dispose();
-        return image;
+    private void move() {
+        switch (dir) {
+            case Left:
+                x -= this.group.getStep();
+                break;
+            case Right:
+                x += this.group.getStep();
+                break;
+            case Up:
+                y -= this.group.getStep();
+                break;
+            case Down:
+                y += this.group.getStep();
+                break;
+            default:
+                break;
+        }
     }
 }

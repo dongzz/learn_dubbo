@@ -2,6 +2,7 @@ package com.dongz.activity.frame;
 
 import com.dongz.activity.emnu.Direction;
 import com.dongz.activity.emnu.Group;
+import com.dongz.activity.obj.Bullet;
 import com.dongz.activity.obj.Tank;
 
 import java.awt.*;
@@ -9,9 +10,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class TankFrame extends Frame {
+    // 单例
+    public final static TankFrame me = new TankFrame();
+
     private final int sizeX = 800, sizeY = 600;
     private Tank tank;
     private Tank enemy;
+    public Bullet bullet ;
 
     Image offImg;
 
@@ -31,6 +36,9 @@ public class TankFrame extends Frame {
     public void paint(Graphics g) {
         tank.paint(g);
         enemy.paint(g);
+        if (me.bullet != null) {
+            me.bullet.paint(g);
+        }
     }
 
     /**

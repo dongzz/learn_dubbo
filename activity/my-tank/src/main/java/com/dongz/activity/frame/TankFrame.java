@@ -8,19 +8,21 @@ import com.dongz.activity.obj.Tank;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TankFrame extends Frame {
     // 单例
     public final static TankFrame me = new TankFrame();
 
-    private final int sizeX = 800, sizeY = 600;
+    public final static int sizeX = 800, sizeY = 600;
     private Tank tank;
     private Tank enemy;
-    public Bullet bullet ;
+    public List<Bullet> bullets = new ArrayList<>();
 
     Image offImg;
 
-    public TankFrame() {
+    private TankFrame() {
         this.setLocation(400, 100);
         this.setSize(sizeX, sizeY);
         this.setTitle("tank war");
@@ -36,9 +38,8 @@ public class TankFrame extends Frame {
     public void paint(Graphics g) {
         tank.paint(g);
         enemy.paint(g);
-        if (me.bullet != null) {
-            me.bullet.paint(g);
-        }
+        me.bullets.parallelStream().filter(Bullet::isLive).forEach(e -> e.paint(g));
+        me.bullets.removeIf(e -> !e.isLive());
     }
 
     /**

@@ -10,9 +10,8 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
     public static void main(String[] args) {
-        Frame f = new TankFrame();
-        f.setVisible(true);
-        f.addWindowListener(new WindowAdapter(){
+        TankFrame.me.setVisible(true);
+        TankFrame.me.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
                 System.exit(0);
             }
@@ -24,7 +23,7 @@ public class Main {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            f.repaint();
+            TankFrame.me.repaint();
         }
     }
 }

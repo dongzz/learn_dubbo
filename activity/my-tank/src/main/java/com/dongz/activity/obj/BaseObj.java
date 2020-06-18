@@ -2,6 +2,7 @@ package com.dongz.activity.obj;
 
 import com.dongz.activity.emnu.Direction;
 import com.dongz.activity.emnu.Group;
+import com.dongz.activity.frame.TankFrame;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,6 +19,7 @@ import java.util.Map;
 public abstract class BaseObj {
     // 位置
     int x,y;
+    int width,height;
     // 方向
     Direction dir;
     // 是否静止
@@ -27,20 +29,22 @@ public abstract class BaseObj {
     // 图片
     Map<String, BufferedImage> imgPo = new HashMap<>();
 
-    private BufferedImage getPoImg(Direction dir) throws IOException {
+    public BufferedImage getPoImg(Direction dir) throws IOException {
         if (imgPo.containsKey(dir.name())) {
             return imgPo.get(dir.name());
         }
 
         BufferedImage img = ImageIO.read(Tank.class.getClassLoader().getResourceAsStream(String.format(this.group.getImg(), dir.getFix())));
         imgPo.put(dir.name(), img);
+        width = img.getWidth();
+        height = img.getHeight();
         return img;
     }
 
     public void paint(Graphics g) {
         try {
             BufferedImage bi = getPoImg(dir);
-            g.drawImage(bi, x, y, null);
+            g.drawImage(bi, x - width / 2, y - height / 2, null);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,22 +53,5 @@ public abstract class BaseObj {
         }
     }
 
-    private void move() {
-        switch (dir) {
-            case Left:
-                x -= this.group.getStep();
-                break;
-            case Right:
-                x += this.group.getStep();
-                break;
-            case Up:
-                y -= this.group.getStep();
-                break;
-            case Down:
-                y += this.group.getStep();
-                break;
-            default:
-                break;
-        }
-    }
+    public abstract void move();
 }

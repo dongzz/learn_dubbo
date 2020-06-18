@@ -5,9 +5,9 @@ import com.dongz.activity.emnu.Group;
 import com.dongz.activity.frame.TankFrame;
 import lombok.Data;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 @Data
 public class Tank extends BaseObj {
@@ -57,7 +57,7 @@ public class Tank extends BaseObj {
     }
 
     private void fire() {
-        TankFrame.me.bullet = new Bullet(this.x, this.y, this.dir, Group.BULLET);
+        TankFrame.me.bullets.add(new Bullet(this.x , this.y, this.dir, Group.BULLET));
     }
 
     private void switchDir() {
@@ -87,20 +87,23 @@ public class Tank extends BaseObj {
         Dd = false;
     }
 
-
-    private void move() {
+    public void move() {
         switch (dir) {
             case Left:
                 x -= this.group.getStep();
+                if (x < width / 2) x = width / 2;
                 break;
             case Right:
                 x += this.group.getStep();
+                if (x > TankFrame.me.sizeX - width / 2) x = TankFrame.me.sizeX - width / 2;
                 break;
             case Up:
                 y -= this.group.getStep();
+                if (y < height / 2) y = height / 2;
                 break;
             case Down:
                 y += this.group.getStep();
+                if (y > TankFrame.me.sizeY - height / 2) y = TankFrame.me.sizeY - height / 2;
                 break;
             default:
                 break;

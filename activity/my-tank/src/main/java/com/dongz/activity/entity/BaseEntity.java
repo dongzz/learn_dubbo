@@ -1,7 +1,7 @@
 package com.dongz.activity.entity;
 
 import com.dongz.activity.emnu.Direction;
-import com.dongz.activity.emnu.Type;
+import com.dongz.activity.emnu.ObjType;
 import lombok.Data;
 
 import javax.imageio.ImageIO;
@@ -30,11 +30,22 @@ public abstract class BaseEntity {
     // 是否静止
     boolean moving;
     // 分组
-    Type type;
+    ObjType type;
     // 图片
     Map<String, BufferedImage> imgPo = new HashMap<>();
     // 形状
     Rectangle rectangle;
+
+    public BaseEntity(int x, int y, Direction dir, ObjType type) {
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
+        this.type = type;
+        // 是否是玩家
+        this.moving = !ObjType.getP().contains(type);
+        this.isLive = true;
+        this.life = type.getLife();
+    }
 
     public BufferedImage getPoImg(Direction dir) throws IOException {
         if (imgPo.containsKey(dir.name())) {

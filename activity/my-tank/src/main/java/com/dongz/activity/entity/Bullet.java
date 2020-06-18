@@ -1,10 +1,9 @@
 package com.dongz.activity.entity;
 
 import com.dongz.activity.emnu.Direction;
-import com.dongz.activity.emnu.Type;
+import com.dongz.activity.emnu.ObjType;
 import com.dongz.activity.frame.TankFrame;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.awt.*;
 import java.util.List;
@@ -14,18 +13,7 @@ import java.util.Optional;
  * 子弹类
  */
 @Data
-@NoArgsConstructor
 public class Bullet extends BaseEntity {
-
-    public Bullet(int x, int y, Direction dir, Type type) {
-        this.x = x;
-        this.y = y;
-        this.dir = dir;
-        this.moving = true;
-        this.isLive = true;
-        this.type = type;
-        this.life = type.getLife();
-    }
 
     @Override
     public void paint(Graphics g) {
@@ -34,6 +22,10 @@ public class Bullet extends BaseEntity {
         collidesWithObj();
         // 越界检测
         boundsCheck();
+    }
+
+    public Bullet(int x, int y, Direction dir, ObjType type) {
+        super(x, y, dir, type);
     }
 
     public void move() {
@@ -57,7 +49,7 @@ public class Bullet extends BaseEntity {
 
     private void collidesWithObj() {
         // 获取敌军
-        List<Type> enemies = Type.getEnemy(this.type);
+        List<ObjType> enemies = ObjType.getEnemy(this.type);
         Optional<BaseEntity> first = TankFrame.me.objs.parallelStream().filter(item -> enemies.contains(item.getType()) && getRectangle().intersects(item.getRectangle())).findFirst();
         if (first.isPresent()) {
             BaseEntity obj = first.get();

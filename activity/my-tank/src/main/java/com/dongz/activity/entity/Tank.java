@@ -1,7 +1,7 @@
 package com.dongz.activity.entity;
 
 import com.dongz.activity.emnu.Direction;
-import com.dongz.activity.emnu.Type;
+import com.dongz.activity.emnu.ObjType;
 import com.dongz.activity.frame.TankFrame;
 import lombok.Data;
 
@@ -17,14 +17,8 @@ public class Tank extends BaseEntity {
 
     private static Random r = new Random();
 
-    public Tank(int x, int y, Direction dir, boolean moving, Type type) {
-        this.x = x;
-        this.y = y;
-        this.dir = dir;
-        this.isLive = true;
-        this.moving = moving;
-        this.type = type;
-        this.life = type.getLife();
+    public Tank(int x, int y, Direction dir, ObjType type) {
+        super(x, y, dir, type);
     }
 
     @Override
@@ -68,10 +62,10 @@ public class Tank extends BaseEntity {
     }
 
     private void fire() {
-        TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, Type.BULLET));
+        TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, ObjType.BULLET));
     }
 
-    private void fire(Type type) {
+    private void fire(ObjType type) {
         TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, type));
     }
 
@@ -127,15 +121,13 @@ public class Tank extends BaseEntity {
                 break;
         }
         // 地方tank 随机给定方向
-        if (Type.getEnemyUnit().contains(type)) {
-            if (r.nextInt(100) > 95) {
-                dir = Direction.getRandomDir();
-                if (randomFire()) fire(Type.ENEMYBULLET);
-            }
+        if (ObjType.getEnemyUnit().contains(type)) {
+            if (random()) dir = Direction.getRandomDir();
+            if (random()) fire(ObjType.ENEMYBULLET);
         }
     }
 
-    private  boolean randomFire() {
-        return r.nextInt(2) == 0;
+    private  boolean random() {
+        return r.nextInt(100) > 95;
     }
 }

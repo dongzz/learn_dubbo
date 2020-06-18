@@ -41,4 +41,8 @@ public enum Group {
         return Arrays.stream(Group.values()).filter(e -> e.getCamp() != group.getCamp()).collect(Collectors.toList());
     }
 
+    public static List<Group> getEnemies() {
+        return Arrays.stream(Group.values()).filter(e -> e.getCamp() == 2).collect(Collectors.toList());
+    }
+
 }

@@ -52,7 +52,7 @@ public class TankFrame extends Frame {
         // 显示地方tank数量
         Color c = g.getColor();
         g.setColor(Color.WHITE);
-        g.drawString("enemies: " + enemies.size(), 10, 50);
+        g.drawString("enemies: " + (me.objs.parallelStream().filter(item -> item.isLive() && ObjType.getEnemyTank().contains(item.getType())).count() + enemies.size()), 10, 50);
         g.setColor(c);
     }
 

@@ -58,7 +58,7 @@ public class Tank extends BaseObj {
     }
 
     private void fire() {
-        TankFrame.me.bullets.add(new Bullet(this.x , this.y, this.dir, Group.BULLET));
+        TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, Group.BULLET));
     }
 
     private void switchDir() {
@@ -88,6 +88,9 @@ public class Tank extends BaseObj {
         Dd = false;
     }
 
+    /**
+     * 判断是否越界
+     */
     public void move() {
         switch (dir) {
             case Left:

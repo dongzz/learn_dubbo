@@ -11,14 +11,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TankFrame extends Frame {
     // 单例
     public final static TankFrame me = new TankFrame();
 
     public final static int sizeX = 800, sizeY = 600;
-    public List<Tank> tanks = new ArrayList<>();
-    public List<Bullet> bullets = new ArrayList<>();
+    public List<BaseObj> objs = new ArrayList<>();
 
     Image offImg;
 
@@ -27,19 +27,17 @@ public class TankFrame extends Frame {
         this.setSize(sizeX, sizeY);
         this.setTitle("tank war");
         // 我方tank
-        tanks.add(new Tank(100, 100, Direction.Up, false, Group.P1));
+        objs.add(new Tank(100, 100, Direction.Up, false, Group.P1));
         // 地方tank
-        tanks.add(new Tank(200, 200, Direction.Up, false, Group.ENEMY4));
+        objs.add(new Tank(200, 200, Direction.Up, false, Group.ENEMY4));
         //增加键盘监听事件
         this.addKeyListener(new TankKeyLister());
     }
 
     @Override
     public void paint(Graphics g) {
-        me.tanks.parallelStream().filter(BaseObj::isLive).forEach(e -> e.paint(g));
-        me.tanks.removeIf(e -> !e.isLive());
-        me.bullets.parallelStream().filter(BaseObj::isLive).forEach(e -> e.paint(g));
-        me.bullets.removeIf(e -> !e.isLive());
+        me.objs.parallelStream().filter(BaseObj::isLive).forEach(e -> e.paint(g));
+        me.objs.removeIf(e -> !e.isLive());
     }
 
     /**
@@ -69,12 +67,14 @@ public class TankFrame extends Frame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            me.tanks.parallelStream().filter(item -> item.isLive() && Group.getP().contains(item.getGroup())).forEach(item -> item.keyPressed(e));
+            List<BaseObj> tanks = me.objs.parallelStream().filter(item -> (item instanceof Tank) && item.isLive() && Group.getP().contains(item.getGroup())).collect(Collectors.toList());
+            tanks.forEach(item -> ((Tank) item).keyPressed(e));
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            me.tanks.parallelStream().filter(item -> item.isLive() && Group.getP().contains(item.getGroup())).forEach(item -> item.keyReleased(e));
+            List<BaseObj> tanks = me.objs.parallelStream().filter(item -> (item instanceof Tank) && item.isLive() && Group.getP().contains(item.getGroup())).collect(Collectors.toList());
+            tanks.forEach(item -> ((Tank) item).keyReleased(e));
         }
     }
 }

@@ -47,7 +47,7 @@ public abstract class BaseObj {
     }
 
     public Rectangle getRectangle() {
-        return rectangle = new Rectangle(x, y, width, height);
+        return rectangle = new Rectangle(x - width / 2, y - height / 2, width, height);
     }
 
     public void paint(Graphics g) {

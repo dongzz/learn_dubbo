@@ -57,7 +57,7 @@ public class Bullet extends BaseObj {
     private void collidesWithObj() {
         // 获取敌军
         List<Group> enemies = Group.getEnemy(this.group);
-        Optional<Tank> first = TankFrame.me.tanks.parallelStream().filter(item -> enemies.contains(item.getGroup()) && getRectangle().intersects(item.getRectangle())).findFirst();
+        Optional<BaseObj> first = TankFrame.me.objs.parallelStream().filter(item -> enemies.contains(item.getGroup()) && getRectangle().intersects(item.getRectangle())).findFirst();
         if (first.isPresent()) {
             first.get().setLive(false);
             setLive(false);

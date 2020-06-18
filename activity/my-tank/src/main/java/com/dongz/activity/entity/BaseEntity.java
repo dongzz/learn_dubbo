@@ -1,7 +1,7 @@
-package com.dongz.activity.obj;
+package com.dongz.activity.entity;
 
 import com.dongz.activity.emnu.Direction;
-import com.dongz.activity.emnu.Group;
+import com.dongz.activity.emnu.Type;
 import lombok.Data;
 
 import javax.imageio.ImageIO;
@@ -17,7 +17,9 @@ import java.util.Map;
  * @desc
  */
 @Data
-public abstract class BaseObj {
+public abstract class BaseEntity {
+    // 生命值
+    int life;
     // 是否存活
     boolean isLive;
     // 位置
@@ -28,7 +30,7 @@ public abstract class BaseObj {
     // 是否静止
     boolean moving;
     // 分组
-    Group group;
+    Type type;
     // 图片
     Map<String, BufferedImage> imgPo = new HashMap<>();
     // 形状
@@ -39,7 +41,7 @@ public abstract class BaseObj {
             return imgPo.get(dir.name());
         }
 
-        BufferedImage img = ImageIO.read(Tank.class.getClassLoader().getResourceAsStream(String.format(this.group.getImg(), dir.getFix())));
+        BufferedImage img = ImageIO.read(Tank.class.getClassLoader().getResourceAsStream(String.format(this.type.getImg(), dir.getFix())));
         imgPo.put(dir.name(), img);
         width = img.getWidth();
         height = img.getHeight();

@@ -1,9 +1,8 @@
 package com.dongz.activity.frame;
 
 import com.dongz.activity.emnu.Direction;
-import com.dongz.activity.emnu.Group;
-import com.dongz.activity.obj.BaseObj;
-import com.dongz.activity.obj.Tank;
+import com.dongz.activity.entity.BaseEntity;
+import com.dongz.activity.entity.Tank;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -17,7 +16,7 @@ public class TankFrame extends Frame {
     public final static TankFrame me = new TankFrame();
 
     public final static int sizeX = 800, sizeY = 600;
-    public List<BaseObj> objs = new ArrayList<>();
+    public List<BaseEntity> objs = new ArrayList<>();
 
     Image offImg;
 
@@ -26,24 +25,25 @@ public class TankFrame extends Frame {
         this.setSize(sizeX, sizeY);
         this.setTitle("tank war");
         // 我方tank
-        objs.add(new Tank(100, 100, Direction.Up, false, Group.P1));
+        objs.add(new Tank(100, 100, Direction.Up, false, com.dongz.activity.emnu.Type.P1));
         // 敌方tank
-        objs.add(new Tank(200, 200, Direction.Up, false, Group.ENEMY2));
-        objs.add(new Tank(300, 200, Direction.Up, false, Group.ENEMY4));
-        objs.add(new Tank(200, 300, Direction.Up, false, Group.ENEMY5));
+        objs.add(new Tank(200, 200, Direction.Up, false, com.dongz.activity.emnu.Type.ENEMY2));
+        objs.add(new Tank(300, 200, Direction.Up, false, com.dongz.activity.emnu.Type.ENEMY4));
+        objs.add(new Tank(200, 300, Direction.Up, false, com.dongz.activity.emnu.Type.ENEMY5));
         //增加键盘监听事件
         this.addKeyListener(new TankKeyLister());
     }
 
     @Override
     public void paint(Graphics g) {
-        me.objs.parallelStream().filter(BaseObj::isLive).forEach(e -> e.paint(g));
+        me.objs.parallelStream().filter(BaseEntity::isLive).forEach(e -> e.paint(g));
         me.objs.removeIf(e -> !e.isLive());
 
         // 显示地方tank数量
         Color c = g.getColor();
         g.setColor(Color.WHITE);
-        g.drawString("enemies: " + me.objs.parallelStream().filter(item -> item.isLive() && Group.getEnemies().contains(item.getGroup())).count(), 10, 50);
+        g.drawString("enemies: " + me.objs.parallelStream().filter(item -> item.isLive() && com.dongz.activity.emnu.Type.getEnemies().contains(item.getType())).count(), 10, 50);
+        g.setColor(c);
     }
 
     /**
@@ -73,13 +73,13 @@ public class TankFrame extends Frame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            List<BaseObj> tanks = me.objs.parallelStream().filter(item -> (item instanceof Tank) && item.isLive() && Group.getP().contains(item.getGroup())).collect(Collectors.toList());
+            List<BaseEntity> tanks = me.objs.parallelStream().filter(item -> (item instanceof Tank) && item.isLive() && com.dongz.activity.emnu.Type.getP().contains(item.getType())).collect(Collectors.toList());
             tanks.forEach(item -> ((Tank) item).keyPressed(e));
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            List<BaseObj> tanks = me.objs.parallelStream().filter(item -> (item instanceof Tank) && item.isLive() && Group.getP().contains(item.getGroup())).collect(Collectors.toList());
+            List<BaseEntity> tanks = me.objs.parallelStream().filter(item -> (item instanceof Tank) && item.isLive() && com.dongz.activity.emnu.Type.getP().contains(item.getType())).collect(Collectors.toList());
             tanks.forEach(item -> ((Tank) item).keyReleased(e));
         }
     }

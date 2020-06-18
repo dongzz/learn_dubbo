@@ -1,25 +1,26 @@
-package com.dongz.activity.obj;
+package com.dongz.activity.entity;
 
 import com.dongz.activity.emnu.Direction;
-import com.dongz.activity.emnu.Group;
+import com.dongz.activity.emnu.Type;
 import com.dongz.activity.frame.TankFrame;
 import lombok.Data;
 
 import java.awt.event.KeyEvent;
 
 @Data
-public class Tank extends BaseObj {
+public class Tank extends BaseEntity {
     private boolean Dl, Dr, Du, Dd;
 
     private Bullet bullet;
 
-    public Tank(int x, int y, Direction dir, boolean moving, Group group) {
+    public Tank(int x, int y, Direction dir, boolean moving, Type type) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.isLive = true;
         this.moving = moving;
-        this.group = group;
+        this.type = type;
+        this.life = type.getLife();
     }
 
     public void keyPressed(KeyEvent e) {
@@ -58,7 +59,7 @@ public class Tank extends BaseObj {
     }
 
     private void fire() {
-        TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, Group.BULLET));
+        TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, Type.BULLET));
     }
 
     private void switchDir() {
@@ -94,19 +95,19 @@ public class Tank extends BaseObj {
     public void move() {
         switch (dir) {
             case Left:
-                x -= this.group.getStep();
+                x -= this.type.getStep();
                 if (x < width / 2) x = width / 2;
                 break;
             case Right:
-                x += this.group.getStep();
+                x += this.type.getStep();
                 if (x > TankFrame.me.sizeX - width / 2) x = TankFrame.me.sizeX - width / 2;
                 break;
             case Up:
-                y -= this.group.getStep();
+                y -= this.type.getStep();
                 if (y < height / 2) y = height / 2;
                 break;
             case Down:
-                y += this.group.getStep();
+                y += this.type.getStep();
                 if (y > TankFrame.me.sizeY - height / 2) y = TankFrame.me.sizeY - height / 2;
                 break;
             default:

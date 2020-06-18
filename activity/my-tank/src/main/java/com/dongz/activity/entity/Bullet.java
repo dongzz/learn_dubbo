@@ -1,7 +1,7 @@
-package com.dongz.activity.obj;
+package com.dongz.activity.entity;
 
 import com.dongz.activity.emnu.Direction;
-import com.dongz.activity.emnu.Group;
+import com.dongz.activity.emnu.Type;
 import com.dongz.activity.frame.TankFrame;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,15 +15,16 @@ import java.util.Optional;
  */
 @Data
 @NoArgsConstructor
-public class Bullet extends BaseObj {
+public class Bullet extends BaseEntity {
 
-    public Bullet(int x, int y, Direction dir, Group group) {
+    public Bullet(int x, int y, Direction dir, Type type) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.moving = true;
         this.isLive = true;
-        this.group = group;
+        this.type = type;
+        this.life = type.getLife();
     }
 
     @Override
@@ -38,16 +39,16 @@ public class Bullet extends BaseObj {
     public void move() {
         switch (dir) {
             case Left:
-                x -= this.group.getStep();
+                x -= this.type.getStep();
                 break;
             case Right:
-                x += this.group.getStep();
+                x += this.type.getStep();
                 break;
             case Up:
-                y -= this.group.getStep();
+                y -= this.type.getStep();
                 break;
             case Down:
-                y += this.group.getStep();
+                y += this.type.getStep();
                 break;
             default:
                 break;
@@ -56,10 +57,14 @@ public class Bullet extends BaseObj {
 
     private void collidesWithObj() {
         // 获取敌军
-        List<Group> enemies = Group.getEnemy(this.group);
-        Optional<BaseObj> first = TankFrame.me.objs.parallelStream().filter(item -> enemies.contains(item.getGroup()) && getRectangle().intersects(item.getRectangle())).findFirst();
+        List<Type> enemies = Type.getEnemy(this.type);
+        Optional<BaseEntity> first = TankFrame.me.objs.parallelStream().filter(item -> enemies.contains(item.getType()) && getRectangle().intersects(item.getRectangle())).findFirst();
         if (first.isPresent()) {
-            first.get().setLive(false);
+            BaseEntity obj = first.get();
+            obj.life -= life;
+            if (obj.life <= 0) {
+                obj.setLive(false);
+            }
             setLive(false);
         }
     }

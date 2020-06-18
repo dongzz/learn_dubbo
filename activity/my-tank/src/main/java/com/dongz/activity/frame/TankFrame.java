@@ -19,13 +19,16 @@ public class TankFrame extends Frame {
     // 单例
     public final static TankFrame me = new TankFrame();
 
-    public List<BaseEntity> objs = new ArrayList<>();
-    Queue<Tank> enemies = new LinkedList<>();
+    public List<BaseEntity> objs;
+    Queue<Tank> enemies;
 
 
     Image offImg;
 
     private TankFrame() {
+        objs = new ArrayList<>();
+        enemies = new LinkedList<>();
+
         this.setLocation(400, 100);
         this.setSize(sizeX, sizeY);
         this.setTitle("tank war");

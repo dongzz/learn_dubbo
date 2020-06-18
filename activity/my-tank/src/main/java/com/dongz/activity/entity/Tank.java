@@ -99,35 +99,48 @@ public class Tank extends BaseEntity {
     /**
      * 判断是否越界
      */
-    public void move() {
+    public synchronized void move() {
+        int oldX = x;
+        int oldY = y;
         switch (dir) {
             case Left:
                 x -= this.type.getStep();
                 if (x < width / 2) x = width / 2;
+                if (hasObstacle()) x = oldX;
                 break;
             case Right:
                 x += this.type.getStep();
                 if (x > TankFrame.me.sizeX - width / 2) x = TankFrame.me.sizeX - width / 2;
+                if (hasObstacle()) x = oldX;
                 break;
             case Up:
                 y -= this.type.getStep();
                 if (y < height / 2) y = height / 2;
+                if (hasObstacle()) y = oldY;
                 break;
             case Down:
                 y += this.type.getStep();
                 if (y > TankFrame.me.sizeY - height / 2) y = TankFrame.me.sizeY - height / 2;
+                if (hasObstacle()) y = oldY;
                 break;
             default:
                 break;
         }
-        // 地方tank 随机给定方向
+        // 敌方tank 随机给定方向
         if (ObjType.getEnemyUnit().contains(type)) {
             if (random()) dir = Direction.getRandomDir();
             if (random()) fire(ObjType.ENEMYBULLET);
         }
     }
 
-    private  boolean random() {
+    /**
+     * 是否有障碍物
+     */
+    private boolean hasObstacle() {
+        return TankFrame.me.objs.parallelStream().filter(e -> e != this).anyMatch(e -> e.getType().isObstacle() && getRectangle().intersects(e.getRectangle()));
+    }
+
+    private boolean random() {
         return r.nextInt(100) > 95;
     }
 }

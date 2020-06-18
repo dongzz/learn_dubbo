@@ -3,6 +3,7 @@ package com.dongz.activity.entity;
 import com.dongz.activity.emnu.Direction;
 import com.dongz.activity.emnu.ObjType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,6 +18,7 @@ import java.util.Map;
  * @desc
  */
 @Data
+@EqualsAndHashCode
 public abstract class BaseEntity {
     // 生命值
     int life;
@@ -73,6 +75,10 @@ public abstract class BaseEntity {
         if (moving) {
             move();
         }
+    }
+
+    public boolean isNotMe(BaseEntity entity) {
+        return !this.equals(entity);
     }
 
     public abstract void move();

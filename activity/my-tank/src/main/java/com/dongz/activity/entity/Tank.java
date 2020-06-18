@@ -5,13 +5,17 @@ import com.dongz.activity.emnu.Type;
 import com.dongz.activity.frame.TankFrame;
 import lombok.Data;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 @Data
 public class Tank extends BaseEntity {
     private boolean Dl, Dr, Du, Dd;
 
     private Bullet bullet;
+
+    private static Random r = new Random();
 
     public Tank(int x, int y, Direction dir, boolean moving, Type type) {
         this.x = x;
@@ -21,6 +25,11 @@ public class Tank extends BaseEntity {
         this.moving = moving;
         this.type = type;
         this.life = type.getLife();
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
     }
 
     public void keyPressed(KeyEvent e) {
@@ -60,6 +69,10 @@ public class Tank extends BaseEntity {
 
     private void fire() {
         TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, Type.BULLET));
+    }
+
+    private void fire(Type type) {
+        TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, type));
     }
 
     private void switchDir() {
@@ -113,5 +126,16 @@ public class Tank extends BaseEntity {
             default:
                 break;
         }
+        // 地方tank 随机给定方向
+        if (Type.getEnemyUnit().contains(type)) {
+            if (r.nextInt(100) > 95) {
+                dir = Direction.getRandomDir();
+                if (randomFire()) fire(Type.ENEMYBULLET);
+            }
+        }
+    }
+
+    private  boolean randomFire() {
+        return r.nextInt(2) == 0;
     }
 }

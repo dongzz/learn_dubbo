@@ -25,24 +25,25 @@ public class TankFrame extends Frame {
         this.setSize(sizeX, sizeY);
         this.setTitle("tank war");
         // 我方tank
-        objs.add(new Tank(100, 100, Direction.Up, false, com.dongz.activity.emnu.Type.P1));
+        objs.add(new Tank(100, 100, Direction.Up, true, com.dongz.activity.emnu.Type.P1));
         // 敌方tank
-        objs.add(new Tank(200, 200, Direction.Up, false, com.dongz.activity.emnu.Type.ENEMY2));
-        objs.add(new Tank(300, 200, Direction.Up, false, com.dongz.activity.emnu.Type.ENEMY4));
-        objs.add(new Tank(200, 300, Direction.Up, false, com.dongz.activity.emnu.Type.ENEMY5));
+        objs.add(new Tank(200, 200, Direction.Up, true, com.dongz.activity.emnu.Type.ENEMY2));
+        objs.add(new Tank(300, 200, Direction.Up, true, com.dongz.activity.emnu.Type.ENEMY4));
+        objs.add(new Tank(200, 300, Direction.Up, true, com.dongz.activity.emnu.Type.ENEMY5));
         //增加键盘监听事件
         this.addKeyListener(new TankKeyLister());
     }
 
     @Override
     public void paint(Graphics g) {
-        me.objs.parallelStream().filter(BaseEntity::isLive).forEach(e -> e.paint(g));
+        List<BaseEntity> collect = me.objs.parallelStream().filter(BaseEntity::isLive).collect(Collectors.toList());
+        collect.forEach(e -> e.paint(g));
         me.objs.removeIf(e -> !e.isLive());
 
         // 显示地方tank数量
         Color c = g.getColor();
         g.setColor(Color.WHITE);
-        g.drawString("enemies: " + me.objs.parallelStream().filter(item -> item.isLive() && com.dongz.activity.emnu.Type.getEnemies().contains(item.getType())).count(), 10, 50);
+        g.drawString("enemies: " + me.objs.parallelStream().filter(item -> item.isLive() && com.dongz.activity.emnu.Type.getEnemyTank().contains(item.getType())).count(), 10, 50);
         g.setColor(c);
     }
 

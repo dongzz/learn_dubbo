@@ -2,7 +2,7 @@ package com.dongz.activity.obj;
 
 import com.dongz.activity.emnu.Direction;
 import com.dongz.activity.emnu.Group;
-import com.dongz.activity.frame.TankFrame;
+import lombok.Data;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -16,7 +16,10 @@ import java.util.Map;
  * @time 2020/6/18 1:11
  * @desc
  */
+@Data
 public abstract class BaseObj {
+    // 是否存活
+    boolean isLive;
     // 位置
     int x,y;
     int width,height;
@@ -28,6 +31,8 @@ public abstract class BaseObj {
     Group group;
     // 图片
     Map<String, BufferedImage> imgPo = new HashMap<>();
+    // 形状
+    Rectangle rectangle;
 
     public BufferedImage getPoImg(Direction dir) throws IOException {
         if (imgPo.containsKey(dir.name())) {
@@ -39,6 +44,10 @@ public abstract class BaseObj {
         width = img.getWidth();
         height = img.getHeight();
         return img;
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle = new Rectangle(x, y, width, height);
     }
 
     public void paint(Graphics g) {

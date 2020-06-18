@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.awt.*;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * 子弹类
@@ -14,7 +16,6 @@ import java.awt.*;
 @Data
 @NoArgsConstructor
 public class Bullet extends BaseObj {
-    private boolean isLive;
 
     public Bullet(int x, int y, Direction dir, Group group) {
         this.x = x;
@@ -28,9 +29,10 @@ public class Bullet extends BaseObj {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        if (x < 0 || y < 0 || x > TankFrame.me.sizeX || y > TankFrame.me.sizeY) {
-            this.isLive = false;
-        }
+        // 碰撞检测
+        collidesWithObj();
+        // 越界检测
+        boundsCheck();
     }
 
     public void move() {
@@ -49,6 +51,22 @@ public class Bullet extends BaseObj {
                 break;
             default:
                 break;
+        }
+    }
+
+    private void collidesWithObj() {
+        // 获取敌军
+        List<Group> enemies = Group.getEnemy(this.group);
+        Optional<Tank> first = TankFrame.me.tanks.parallelStream().filter(item -> enemies.contains(item.getGroup()) && getRectangle().intersects(item.getRectangle())).findFirst();
+        if (first.isPresent()) {
+            first.get().setLive(false);
+            setLive(false);
+        }
+    }
+
+    private void boundsCheck() {
+        if (x < 0 || y < 0 || x > TankFrame.me.sizeX || y > TankFrame.me.sizeY) {
+            this.isLive = false;
         }
     }
 }

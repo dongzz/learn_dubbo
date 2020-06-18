@@ -2,6 +2,7 @@ package com.dongz.activity.frame;
 
 import com.dongz.activity.emnu.Direction;
 import com.dongz.activity.emnu.Group;
+import com.dongz.activity.obj.BaseObj;
 import com.dongz.activity.obj.Bullet;
 import com.dongz.activity.obj.Tank;
 
@@ -16,8 +17,7 @@ public class TankFrame extends Frame {
     public final static TankFrame me = new TankFrame();
 
     public final static int sizeX = 800, sizeY = 600;
-    private Tank tank;
-    private Tank enemy;
+    public List<Tank> tanks = new ArrayList<>();
     public List<Bullet> bullets = new ArrayList<>();
 
     Image offImg;
@@ -27,18 +27,18 @@ public class TankFrame extends Frame {
         this.setSize(sizeX, sizeY);
         this.setTitle("tank war");
         // 我方tank
-        tank = new Tank(100, 100, Direction.Up, false, Group.P1);
+        tanks.add(new Tank(100, 100, Direction.Up, false, Group.P1));
         // 地方tank
-        enemy = new Tank(200, 200, Direction.Up, false, Group.ENEMY4);
+        tanks.add(new Tank(200, 200, Direction.Up, false, Group.ENEMY4));
         //增加键盘监听事件
         this.addKeyListener(new TankKeyLister());
     }
 
     @Override
     public void paint(Graphics g) {
-        tank.paint(g);
-        enemy.paint(g);
-        me.bullets.parallelStream().filter(Bullet::isLive).forEach(e -> e.paint(g));
+        me.tanks.parallelStream().filter(BaseObj::isLive).forEach(e -> e.paint(g));
+        me.tanks.removeIf(e -> !e.isLive());
+        me.bullets.parallelStream().filter(BaseObj::isLive).forEach(e -> e.paint(g));
         me.bullets.removeIf(e -> !e.isLive());
     }
 
@@ -69,12 +69,12 @@ public class TankFrame extends Frame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            tank.keyPressed(e);
+            me.tanks.parallelStream().filter(item -> item.isLive() && Group.getP().contains(item.getGroup())).forEach(item -> item.keyPressed(e));
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            tank.keyReleased(e);
+            me.tanks.parallelStream().filter(item -> item.isLive() && Group.getP().contains(item.getGroup())).forEach(item -> item.keyReleased(e));
         }
     }
 }

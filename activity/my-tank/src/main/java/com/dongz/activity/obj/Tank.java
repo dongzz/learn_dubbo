@@ -6,8 +6,6 @@ import com.dongz.activity.frame.TankFrame;
 import lombok.Data;
 
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 @Data
 public class Tank extends BaseObj {
@@ -19,6 +17,7 @@ public class Tank extends BaseObj {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.isLive = true;
         this.moving = moving;
         this.group = group;
     }
@@ -49,7 +48,9 @@ public class Tank extends BaseObj {
                 Dd = move;
                 break;
             case KeyEvent.VK_CONTROL:
-                this.fire();
+                if (move) {
+                    this.fire();
+                }
                 break;
             default:
                 break;

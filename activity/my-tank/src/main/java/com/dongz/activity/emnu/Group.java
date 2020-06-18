@@ -3,6 +3,11 @@ package com.dongz.activity.emnu;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Getter
 @AllArgsConstructor
 public enum Group {
@@ -22,4 +27,18 @@ public enum Group {
     String name;
     String img;
     int step;
+
+    public static List<Group> getP() {
+        return Arrays.stream(Group.values()).filter(e -> e.getCode() == 1).collect(Collectors.toList());
+    }
+
+    public static List<Group> getFamily(Group group) {
+        return Arrays.stream(Group.values()).filter(e -> e.getCamp() == group.getCamp() && !e.equals(group)).collect(Collectors.toList());
+    }
+
+
+    public static List<Group> getEnemy(Group group) {
+        return Arrays.stream(Group.values()).filter(e -> e.getCamp() != group.getCamp()).collect(Collectors.toList());
+    }
+
 }

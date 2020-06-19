@@ -43,6 +43,10 @@ public enum ObjType {
         return Arrays.stream(ObjType.values()).filter(e -> e.getCode() == 2).collect(Collectors.toList());
     }
 
+    public static List<ObjType> getObstacles() {
+        return Arrays.stream(ObjType.values()).filter(ObjType::isObstacle).collect(Collectors.toList());
+    }
+
     public static List<ObjType> getFamily(ObjType type) {
         return Arrays.stream(ObjType.values()).filter(e -> e.getCamp() == type.getCamp() && !e.equals(type)).collect(Collectors.toList());
     }

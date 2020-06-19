@@ -14,6 +14,8 @@ import java.util.Optional;
  */
 @Data
 public class Bullet extends BaseEntity {
+    // 打出子弹的tank
+    public Tank tank;
 
     @Override
     public void paint(Graphics g) {
@@ -24,8 +26,9 @@ public class Bullet extends BaseEntity {
         boundsCheck();
     }
 
-    public Bullet(int x, int y, Direction dir, ObjType type) {
+    public Bullet(int x, int y, Direction dir, ObjType type, Tank tank) {
         super(x, y, dir, type);
+        this.tank = tank;
     }
 
     public void move() {
@@ -48,14 +51,19 @@ public class Bullet extends BaseEntity {
     }
 
     private void collidesWithObj() {
-        // 获取敌军
-        List<ObjType> enemies = ObjType.getEnemy(this.type);
-        Optional<BaseEntity> first = TankFrame.me.objs.parallelStream().filter(item -> enemies.contains(item.getType()) && getRectangle().intersects(item.getRectangle())).findFirst();
+        // 获取障碍物
+        List<ObjType> obstacles = ObjType.getObstacles();
+        Optional<BaseEntity> first = TankFrame.me.objs.parallelStream().filter(item -> obstacles.contains(item.getType()) &&
+                !item.equals(this.tank) && getRectangle().intersects(item.getRectangle())).findFirst();
         if (first.isPresent()) {
             BaseEntity obj = first.get();
-            obj.life -= life;
-            if (obj.life <= 0) {
-                obj.setLive(false);
+            // 判断是否是友军
+            if (obj.getType().getCamp() != this.getType().getCamp()) {
+                // 计算伤害值
+                obj.life -= life;
+                if (obj.life <= 0) {
+                    obj.setLive(false);
+                }
             }
             setLive(false);
         }

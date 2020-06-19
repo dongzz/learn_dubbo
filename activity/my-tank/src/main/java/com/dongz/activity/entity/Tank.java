@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Objects;
 import java.util.Random;
 
 @Data
@@ -62,11 +63,11 @@ public class Tank extends BaseEntity {
     }
 
     private void fire() {
-        TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, ObjType.BULLET));
+        TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, ObjType.BULLET, this));
     }
 
     private void fire(ObjType type) {
-        TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, type));
+        TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, type, this));
     }
 
     private void switchDir() {
@@ -115,7 +116,7 @@ public class Tank extends BaseEntity {
                 break;
             case Up:
                 y -= this.type.getStep();
-                if (y < height / 2) y = height / 2;
+                if (y < height) y = height;
                 if (hasObstacle()) y = oldY;
                 break;
             case Down:
@@ -137,10 +138,28 @@ public class Tank extends BaseEntity {
      * 是否有障碍物
      */
     private boolean hasObstacle() {
-        return TankFrame.me.objs.parallelStream().filter(e -> e != this).anyMatch(e -> e.getType().isObstacle() && getRectangle().intersects(e.getRectangle()));
+        return TankFrame.me.objs.parallelStream().filter(e -> !equals(e)).anyMatch(e -> e.getType().isObstacle() && getRectangle().intersects(e.getRectangle()));
     }
 
     private boolean random() {
         return r.nextInt(100) > 95;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Tank tank = (Tank) o;
+        return Dl == tank.Dl &&
+                Dr == tank.Dr &&
+                Du == tank.Du &&
+                Dd == tank.Dd &&
+                Objects.equals(bullet, tank.bullet);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), Dl, Dr, Du, Dd, bullet);
     }
 }

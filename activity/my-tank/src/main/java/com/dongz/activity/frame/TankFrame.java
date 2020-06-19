@@ -20,7 +20,10 @@ public class TankFrame extends Frame {
     public final static TankFrame me = new TankFrame();
 
     public List<BaseEntity> objs;
+    // 敌方tank
     Queue<Tank> enemies;
+    // 玩家tank
+    Queue<Tank> players;
 
 
     Image offImg;
@@ -28,12 +31,15 @@ public class TankFrame extends Frame {
     private TankFrame() {
         objs = new ArrayList<>();
         enemies = new LinkedList<>();
+        players = new LinkedList<>();
 
         this.setLocation(400, 100);
         this.setSize(sizeX, sizeY);
         this.setTitle("tank war");
         // 我方tank
-        objs.add(new Tank(100, sizeY-100, Direction.Up, ObjType.P1));
+        for (int i = 0; i < 3; i++) {
+            players.add(new Tank(100, sizeY-100, Direction.Up, ObjType.P1));
+        }
         // 敌方tank
         for (int i = 0; i < 10; i++) {
             int x = r.nextInt(sizeX);
@@ -46,17 +52,23 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+        // 最多允许5个tank
         if (me.objs.size() < 5 && enemies.size() > 0) objs.add(enemies.poll());
+        // 玩家重生
+        if (me.objs.parallelStream().noneMatch(e -> ObjType.getP().contains(e.getType())) && players.size()>0) objs.add(players.poll());
 
         List<BaseEntity> collect = me.objs.parallelStream().filter(BaseEntity::isLive).collect(Collectors.toList());
         collect.forEach(e -> e.paint(g));
         me.objs.removeIf(e -> !e.isLive());
 
-        // 显示地方tank数量
+        // 显示敌方tank数量
         Color c = g.getColor();
         g.setColor(Color.WHITE);
         g.drawString("enemies: " + (me.objs.parallelStream().filter(item -> item.isLive() && ObjType.getEnemyTank().contains(item.getType())).count() + enemies.size()), 10, 50);
         g.setColor(c);
+        // 显示玩家tank数
+        g.setColor(Color.RED);
+        g.drawString("players: " + (me.objs.parallelStream().filter(item -> item.isLive() && ObjType.getP().contains(item.getType())).count() + players.size()), 100, 50);
     }
 
     /**

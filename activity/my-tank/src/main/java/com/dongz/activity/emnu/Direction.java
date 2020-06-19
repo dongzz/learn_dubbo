@@ -1,9 +1,8 @@
 package com.dongz.activity.emnu;
 
+import com.dongz.activity.util.RandomUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Random;
 
 @AllArgsConstructor
 @Getter
@@ -16,9 +15,7 @@ public enum Direction {
     String name;
     String fix;
 
-    private static Random r = new Random();
-
     public static Direction getRandomDir() {
-        return values()[r.nextInt(Direction.values().length)];
+        return values()[RandomUtil.getRandomNum(Direction.values().length)];
     }
 }

@@ -3,6 +3,7 @@ package com.dongz.activity.entity;
 import com.dongz.activity.emnu.Direction;
 import com.dongz.activity.emnu.ObjType;
 import com.dongz.activity.frame.TankFrame;
+import com.dongz.activity.util.RandomUtil;
 import lombok.Data;
 
 import java.awt.*;
@@ -15,8 +16,6 @@ public class Tank extends BaseEntity {
     private boolean Dl, Dr, Du, Dd;
 
     private Bullet bullet;
-
-    private static Random r = new Random();
 
     public Tank(int x, int y, Direction dir, ObjType type) {
         super(x, y, dir, type);
@@ -129,8 +128,8 @@ public class Tank extends BaseEntity {
         }
         // 敌方tank 随机给定方向
         if (ObjType.getEnemyUnit().contains(type)) {
-            if (random()) dir = Direction.getRandomDir();
-            if (random()) fire(ObjType.ENEMYBULLET);
+            if (RandomUtil.getRandom()) dir = Direction.getRandomDir();
+            if (RandomUtil.getRandom()) fire(ObjType.ENEMYBULLET);
         }
     }
 
@@ -139,10 +138,6 @@ public class Tank extends BaseEntity {
      */
     private boolean hasObstacle() {
         return TankFrame.me.objs.parallelStream().filter(e -> !equals(e)).anyMatch(e -> e.getType().isObstacle() && getRectangle().intersects(e.getRectangle()));
-    }
-
-    private boolean random() {
-        return r.nextInt(100) > 95;
     }
 
     @Override

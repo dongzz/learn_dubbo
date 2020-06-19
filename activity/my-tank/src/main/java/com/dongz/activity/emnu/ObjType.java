@@ -1,11 +1,11 @@
 package com.dongz.activity.emnu;
 
+import com.dongz.activity.util.RandomUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -33,8 +33,6 @@ public enum ObjType {
     int life;// tank：生命值 子弹：伤害
     boolean isObstacle; //是否是障碍物
 
-    private static Random r = new Random();
-
     public static List<ObjType> getP() {
         return Arrays.stream(ObjType.values()).filter(e -> e.getCode() == 1).collect(Collectors.toList());
     }
@@ -61,7 +59,7 @@ public enum ObjType {
     }
 
     public static ObjType getRandomEnemy() {
-        return getEnemyTank().get(r.nextInt(getEnemyTank().size()));
+        return getEnemyTank().get(RandomUtil.getRandomNum(getEnemyTank().size()));
     }
 
 }

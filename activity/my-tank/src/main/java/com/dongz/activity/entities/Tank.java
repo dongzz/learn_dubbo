@@ -2,7 +2,7 @@ package com.dongz.activity.entities;
 
 import com.dongz.activity.enums.Direction;
 import com.dongz.activity.enums.ObjType;
-import com.dongz.activity.frame.TankFrame;
+import com.dongz.activity.frames.MainFrame;
 import com.dongz.activity.utils.RandomUtil;
 import lombok.Data;
 
@@ -61,11 +61,11 @@ public class Tank extends BaseEntity {
     }
 
     private void fire() {
-        TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, ObjType.BULLET, this));
+        MainFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, ObjType.BULLET, this));
     }
 
     private void fire(ObjType type) {
-        TankFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, type, this));
+        MainFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, type, this));
     }
 
     private void switchDir() {
@@ -109,7 +109,7 @@ public class Tank extends BaseEntity {
                 break;
             case Right:
                 x += this.type.getStep();
-                if (x > TankFrame.me.sizeX - width / 2) x = TankFrame.me.sizeX - width / 2;
+                if (x > MainFrame.me.sizeX - width / 2) x = MainFrame.me.sizeX - width / 2;
                 if (hasObstacle()) x = oldX;
                 break;
             case Up:
@@ -119,7 +119,7 @@ public class Tank extends BaseEntity {
                 break;
             case Down:
                 y += this.type.getStep();
-                if (y > TankFrame.me.sizeY - height / 2) y = TankFrame.me.sizeY - height / 2;
+                if (y > MainFrame.me.sizeY - height / 2) y = MainFrame.me.sizeY - height / 2;
                 if (hasObstacle()) y = oldY;
                 break;
             default:
@@ -136,7 +136,7 @@ public class Tank extends BaseEntity {
      * 是否有障碍物
      */
     private boolean hasObstacle() {
-        return TankFrame.me.objs.parallelStream().filter(e -> !equals(e)).anyMatch(e -> e.getType().isObstacle() && getRectangle().intersects(e.getRectangle()));
+        return MainFrame.me.objs.parallelStream().filter(e -> !equals(e)).anyMatch(e -> e.getType().isObstacle() && getRectangle().intersects(e.getRectangle()));
     }
 
     @Override

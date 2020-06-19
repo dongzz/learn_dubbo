@@ -1,4 +1,4 @@
-package com.dongz.activity.frame;
+package com.dongz.activity.frames;
 
 import com.dongz.activity.enums.Direction;
 import com.dongz.activity.enums.ObjType;
@@ -12,12 +12,12 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TankFrame extends Frame {
+public class MainFrame extends Frame {
 
     private static Random r = new Random();
     public final static int sizeX = 800, sizeY = 600;
     // 单例
-    public final static TankFrame me = new TankFrame();
+    public final static MainFrame me = new MainFrame();
 
     public List<BaseEntity> objs;
     // 敌方tank
@@ -28,7 +28,7 @@ public class TankFrame extends Frame {
 
     Image offImg;
 
-    private TankFrame() {
+    private MainFrame() {
         objs = new ArrayList<>();
         enemies = new LinkedList<>();
         players = new LinkedList<>();

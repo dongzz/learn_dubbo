@@ -2,7 +2,7 @@ package com.dongz.activity.entities;
 
 import com.dongz.activity.enums.Direction;
 import com.dongz.activity.enums.ObjType;
-import com.dongz.activity.frame.TankFrame;
+import com.dongz.activity.frames.MainFrame;
 import lombok.Data;
 
 import java.awt.*;
@@ -53,7 +53,7 @@ public class Bullet extends BaseEntity {
     private void collidesWithObj() {
         // 获取障碍物
         List<ObjType> obstacles = ObjType.getObstacles();
-        Optional<BaseEntity> first = TankFrame.me.objs.parallelStream().filter(item -> obstacles.contains(item.getType()) &&
+        Optional<BaseEntity> first = MainFrame.me.objs.parallelStream().filter(item -> obstacles.contains(item.getType()) &&
                 !item.equals(this.tank) && getRectangle().intersects(item.getRectangle())).findFirst();
         if (first.isPresent()) {
             BaseEntity obj = first.get();
@@ -70,7 +70,7 @@ public class Bullet extends BaseEntity {
     }
 
     private void boundsCheck() {
-        if (x < 0 || y < 0 || x > TankFrame.me.sizeX || y > TankFrame.me.sizeY) {
+        if (x < 0 || y < 0 || x > MainFrame.me.sizeX || y > MainFrame.me.sizeY) {
             this.isLive = false;
         }
     }

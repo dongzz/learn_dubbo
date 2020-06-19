@@ -1,6 +1,6 @@
-package com.dongz.activity.emnu;
+package com.dongz.activity.enums;
 
-import com.dongz.activity.util.RandomUtil;
+import com.dongz.activity.utils.RandomUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package com.dongz.activity.util;
+package com.dongz.activity.utils;
 
 import java.util.Random;
 

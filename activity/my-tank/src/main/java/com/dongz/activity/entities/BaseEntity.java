@@ -1,7 +1,7 @@
-package com.dongz.activity.entity;
+package com.dongz.activity.entities;
 
-import com.dongz.activity.emnu.Direction;
-import com.dongz.activity.emnu.ObjType;
+import com.dongz.activity.enums.Direction;
+import com.dongz.activity.enums.ObjType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

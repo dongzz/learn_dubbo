@@ -1,9 +1,9 @@
 package com.dongz.activity.frame;
 
-import com.dongz.activity.emnu.Direction;
-import com.dongz.activity.emnu.ObjType;
-import com.dongz.activity.entity.BaseEntity;
-import com.dongz.activity.entity.Tank;
+import com.dongz.activity.enums.Direction;
+import com.dongz.activity.enums.ObjType;
+import com.dongz.activity.entities.BaseEntity;
+import com.dongz.activity.entities.Tank;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;

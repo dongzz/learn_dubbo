@@ -1,15 +1,14 @@
-package com.dongz.activity.entity;
+package com.dongz.activity.entities;
 
-import com.dongz.activity.emnu.Direction;
-import com.dongz.activity.emnu.ObjType;
+import com.dongz.activity.enums.Direction;
+import com.dongz.activity.enums.ObjType;
 import com.dongz.activity.frame.TankFrame;
-import com.dongz.activity.util.RandomUtil;
+import com.dongz.activity.utils.RandomUtil;
 import lombok.Data;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Objects;
-import java.util.Random;
 
 @Data
 public class Tank extends BaseEntity {

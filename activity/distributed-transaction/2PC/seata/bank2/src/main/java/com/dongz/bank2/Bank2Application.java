@@ -1,4 +1,4 @@
-package com.dongz.bank1;
+package com.dongz.bank2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class Bank1Application {
+public class Bank2Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(Bank1Application.class, args);
+        SpringApplication.run(Bank2Application.class, args);
     }
 
 }

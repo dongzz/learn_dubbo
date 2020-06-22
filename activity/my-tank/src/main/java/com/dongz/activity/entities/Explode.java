@@ -35,6 +35,7 @@ public class Explode extends BaseEntity {
         this.x = x;
         this.y = y;
         this.isLive = true;
+        this.type = ObjType.EXPLODE;
     }
 
     public void paint(Graphics g) {

@@ -24,7 +24,7 @@ public abstract class BaseEnemy extends BaseEntity{
     // 是否静止
     boolean moving;
     // 图片
-    Map<String, BufferedImage> imgPo = new HashMap<>();
+    static Map<String, BufferedImage> imgPo = new HashMap<>();
 
     public BaseEnemy(int x, int y, Direction dir, ObjType type) {
         this.x = x;
@@ -38,19 +38,15 @@ public abstract class BaseEnemy extends BaseEntity{
     }
 
     public BufferedImage getPoImg(Direction dir) throws IOException {
-        if (imgPo.containsKey(dir.name())) {
-            return imgPo.get(dir.name());
+        if (imgPo.containsKey(type.name() + dir.name())) {
+            return imgPo.get(type.name() + dir.name());
         }
 
         BufferedImage img = ImageIO.read(Tank.class.getClassLoader().getResourceAsStream(String.format(this.type.getImg(), dir.getFix())));
-        imgPo.put(dir.name(), img);
+        imgPo.put(type.name() + dir.name(), img);
         width = img.getWidth();
         height = img.getHeight();
         return img;
-    }
-
-    public Rectangle getRectangle() {
-        return rectangle = new Rectangle(x - width / 2, y - height / 2, width, height);
     }
 
     public void paint(Graphics g) {

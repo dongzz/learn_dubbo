@@ -3,6 +3,9 @@ package com.dongz.activity.entities;
 import com.dongz.activity.enums.Direction;
 import com.dongz.activity.enums.ObjType;
 import com.dongz.activity.frames.MainFrame;
+import com.dongz.activity.strategy.AbstractFire;
+import com.dongz.activity.strategy.DefaultFire;
+import com.dongz.activity.strategy.FourDirFire;
 import com.dongz.activity.utils.RandomUtil;
 import lombok.Data;
 
@@ -64,10 +67,6 @@ public class Tank extends BaseEnemy {
         MainFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, ObjType.BULLET, this));
     }
 
-    private void fire(ObjType type) {
-        MainFrame.me.objs.add(new Bullet(this.x , this.y, this.dir, type, this));
-    }
-
     private void switchDir() {
         moving = Dl || Dr || Du || Dd;
 
@@ -127,8 +126,9 @@ public class Tank extends BaseEnemy {
         }
         // 敌方tank 随机给定方向
         if (ObjType.getEnemyUnit().contains(type)) {
+            AbstractFire fire = new DefaultFire();
             if (RandomUtil.getRandom()) dir = Direction.getRandomDir();
-            if (RandomUtil.getRandom()) fire(ObjType.ENEMYBULLET);
+            if (RandomUtil.getRandom()) fire.start(this);
         }
     }
 
@@ -136,7 +136,7 @@ public class Tank extends BaseEnemy {
      * 是否有障碍物
      */
     private boolean hasObstacle() {
-        return MainFrame.me.objs.parallelStream().filter(e -> !equals(e) && (e instanceof BaseEnemy)).anyMatch(e -> e.getType().isObstacle() && getRectangle().intersects(e.getRectangle()));
+        return MainFrame.me.objs.parallelStream().filter(e -> e.getType().getCamp() != 4).filter(e -> !equals(e)).anyMatch(e -> e.getType().isObstacle() && getRectangle().intersects(e.getRectangle()));
     }
 
     @Override

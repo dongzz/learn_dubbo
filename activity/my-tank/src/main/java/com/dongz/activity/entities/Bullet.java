@@ -53,7 +53,8 @@ public class Bullet extends BaseEnemy {
     private void collidesWithObj() {
         // 获取障碍物
         List<ObjType> obstacles = ObjType.getObstacles();
-        Optional<BaseEntity> first = MainFrame.me.objs.parallelStream().filter(item -> !this.type.equals(item.getType()) && obstacles.contains(item.getType()) &&
+        Optional<BaseEntity> first = MainFrame.me.objs.parallelStream().filter(e -> e.getType().getCamp() != 4)
+                .filter(item -> !this.type.equals(item.getType()) && obstacles.contains(item.getType()) &&
                 !item.equals(this.tank) && getRectangle().intersects(item.getRectangle())).findFirst();
         if (first.isPresent()) {
             BaseEntity obj = first.get();

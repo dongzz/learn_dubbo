@@ -37,4 +37,8 @@ public abstract class BaseEntity {
     }
 
     public abstract void paint(Graphics g);
+
+    public Rectangle getRectangle() {
+        return rectangle = new Rectangle(x - width / 2, y - height / 2, width, height);
+    }
 }

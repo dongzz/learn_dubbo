@@ -24,7 +24,8 @@ public enum ObjType {
     ENEMY6(2,2,"敌军", "images/tank/enemy6%s.gif", 4, 3, true),
     BULLET(3,1,"友军子弹", "images/bullet/bullet%s.gif", 10, 1, true),
     ENEMYBULLET(3,2, "敌军子弹", "images/bullet/bullet%s.gif", 10, 1, true),
-    EXPLODE(4,0, "烟火", "images/explode/%s.png", 0, 0, false);
+    EXPLODE(4,0, "烟火", "images/explode/%s.png", 0, 0, false),
+    BRICKWALL(5,0, "土墙", "images/obstacle/brickwall01.png", 0, 1, true);
 
     int code; // 类型 1：玩家， 2： 敌军 ，3：子弹, 4：爆炸
     int camp; // 阵营 0：公立， 1， 友方， 2： 敌方
@@ -61,6 +62,10 @@ public enum ObjType {
 
     public static ObjType getRandomEnemy() {
         return getEnemyTank().get(RandomUtil.getRandomNum(getEnemyTank().size()));
+    }
+
+    public static ObjType getBullets(ObjType obj) {
+        return Arrays.stream(values()).filter(e -> e.getCode() == 3 && e.getCamp() == obj.getCamp()).findFirst().orElse(null);
     }
 
 }

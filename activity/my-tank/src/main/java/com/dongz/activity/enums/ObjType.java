@@ -22,8 +22,8 @@ public enum ObjType {
     ENEMY4(2,2,"敌军", "images/tank/enemy4%s.gif", 5, 2, true),
     ENEMY5(2,2,"敌军", "images/tank/enemy5%s.gif", 4, 3, true),
     ENEMY6(2,2,"敌军", "images/tank/enemy6%s.gif", 4, 3, true),
-    BULLET(3,1,"友军子弹", "images/bullet/bullet%s.gif", 10, 1, false),
-    ENEMYBULLET(3,2, "敌军子弹", "images/bullet/bullet%s.gif", 10, 1, false),
+    BULLET(3,1,"友军子弹", "images/bullet/bullet%s.gif", 10, 1, true),
+    ENEMYBULLET(3,2, "敌军子弹", "images/bullet/bullet%s.gif", 10, 1, true),
     EXPLODE(4,0, "烟火", "images/explode/%s.png", 0, 0, false);
 
     int code; // 类型 1：玩家， 2： 敌军 ，3：子弹, 4：爆炸

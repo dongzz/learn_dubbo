@@ -23,10 +23,11 @@ public enum ObjType {
     ENEMY5(2,2,"敌军", "images/tank/enemy5%s.gif", 4, 3, true),
     ENEMY6(2,2,"敌军", "images/tank/enemy6%s.gif", 4, 3, true),
     BULLET(3,1,"友军子弹", "images/bullet/bullet%s.gif", 10, 1, false),
-    ENEMYBULLET(3,2, "敌军子弹", "images/bullet/bullet%s.gif", 10, 1, false);
+    ENEMYBULLET(3,2, "敌军子弹", "images/bullet/bullet%s.gif", 10, 1, false),
+    EXPLODE(4,0, "烟火", "images/explode/%s.png", 0, 0, false);
 
-    int code; // 类型 1：玩家， 2： 敌军 ，3：子弹
-    int camp; // 阵营
+    int code; // 类型 1：玩家， 2： 敌军 ，3：子弹, 4：爆炸
+    int camp; // 阵营 0：公立， 1， 友方， 2： 敌方
     String name;
     String img; //图片
     int step; // 速递
@@ -51,7 +52,7 @@ public enum ObjType {
 
 
     public static List<ObjType> getEnemy(ObjType type) {
-        return Arrays.stream(ObjType.values()).filter(e -> e.getCamp() != type.getCamp()).collect(Collectors.toList());
+        return Arrays.stream(ObjType.values()).filter(e -> e.getCamp() != type.getCamp() && e.getCamp() != 0).collect(Collectors.toList());
     }
 
     public static List<ObjType> getEnemyUnit() {

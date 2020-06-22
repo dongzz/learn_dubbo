@@ -1,6 +1,26 @@
 server:
   port: 8002
-
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:   #é…ç½®å…¨å±€çš„feignçš„è°ƒç”¨è¶…æ—¶æ—¶é—´  å¦‚æœ æœ‰æŒ‡å®šçš„æœåŠ¡é…ç½® é»˜è®¤çš„é…ç½®ä¸ä¼šç”Ÿæ•ˆ
+        connectTimeout: 60000 # æŒ‡å®šçš„æ˜¯ æ¶ˆè´¹è€… è¿æ¥æœåŠ¡æä¾›è€…çš„è¿æ¥è¶…æ—¶æ—¶é—´ æ˜¯å¦èƒ½è¿æ¥  å•ä½æ˜¯æ¯«ç§’
+        readTimeout: 80000  # æŒ‡å®šçš„æ˜¯è°ƒç”¨æœåŠ¡æä¾›è€…çš„ æœåŠ¡ çš„è¶…æ—¶æ—¶é—´ï¼ˆï¼‰  å•ä½æ˜¯æ¯«ç§’
+#hystrix é…ç½®
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          #å¦‚æœenabledè®¾ç½®ä¸ºfalseï¼Œåˆ™è¯·æ±‚è¶…æ—¶äº¤ç»™ribbonæ§åˆ¶
+          enabled: true
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            # ç†”æ–­å™¨è¶…æ—¶æ—¶é—´ï¼Œé»˜è®¤ï¼š1000/æ¯«ç§’
+            timeoutInMilliseconds: 80000
 spring:
   application:
     name: bank2
@@ -13,14 +33,10 @@ spring:
 
 eureka:
   client:
-    #±íÊ¾ÊÇ·ñ½«×Ô¼º×¢²á½øEurekaServerÄ¬ÈÏÎªtrue
     register-with-eureka: true
-    #ÊÇ·ñ´ÓEurekaServer×¥È¡ÒÑÓĞµÄ×¢²áĞÅÏ¢£¬Ä¬ÈÏÎªtrue¡£µ¥½ÚµãÎŞËùÎ½£¬¼¯Èº±ØĞëÉèÖÃÎªtrue²ÅÄÜÅäºÏribbonÊ¹ÓÃ¸ºÔØ¾ùºâ
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8000/eureka
   instance:
-    # ĞŞ¸ÄÖ÷»úÃû
     instance-id: bank2
-    # ·ÃÎÊÂ·¾¶¿ÉÒÔÏÔÊ¾ipµØÖ·
     prefer-ip-address: true

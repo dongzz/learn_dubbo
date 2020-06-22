@@ -1,5 +1,6 @@
 package com.dongz.activity.frames;
 
+import com.dongz.activity.entities.Explode;
 import com.dongz.activity.enums.Direction;
 import com.dongz.activity.enums.ObjType;
 import com.dongz.activity.entities.BaseEntity;
@@ -56,10 +57,11 @@ public class MainFrame extends Frame {
         if (me.objs.size() < 5 && enemies.size() > 0) objs.add(enemies.poll());
         // 玩家重生
         if (me.objs.parallelStream().noneMatch(e -> ObjType.getP().contains(e.getType())) && players.size()>0) objs.add(players.poll());
-
+        // 物体
         List<BaseEntity> collect = me.objs.parallelStream().filter(BaseEntity::isLive).collect(Collectors.toList());
         collect.forEach(e -> e.paint(g));
         me.objs.removeIf(e -> !e.isLive());
+        //
 
         // 显示敌方tank数量
         Color c = g.getColor();

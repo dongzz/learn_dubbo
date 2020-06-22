@@ -13,7 +13,7 @@ import java.util.Optional;
  * 子弹类
  */
 @Data
-public class Bullet extends BaseEntity {
+public class Bullet extends BaseEnemy {
     // 打出子弹的tank
     public Tank tank;
 
@@ -60,9 +60,15 @@ public class Bullet extends BaseEntity {
             // 判断是否是友军
             if (obj.getType().getCamp() != this.getType().getCamp()) {
                 // 计算伤害值
+                if (obj.getType().getCode() == 3) {
+                    obj.setLive(false);
+                    MainFrame.me.objs.add(new Explode(obj.getX(), obj.getY()));
+                    return;
+                }
                 obj.life -= life;
                 if (obj.life <= 0) {
                     obj.setLive(false);
+                    MainFrame.me.objs.add(new Explode(obj.getX(), obj.getY()));
                 }
             }
             setLive(false);

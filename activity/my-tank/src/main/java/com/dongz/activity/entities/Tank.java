@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 import java.util.Objects;
 
 @Data
-public class Tank extends BaseEntity {
+public class Tank extends BaseEnemy {
     private boolean Dl, Dr, Du, Dd;
 
     private Bullet bullet;
@@ -136,7 +136,7 @@ public class Tank extends BaseEntity {
      * 是否有障碍物
      */
     private boolean hasObstacle() {
-        return MainFrame.me.objs.parallelStream().filter(e -> !equals(e)).anyMatch(e -> e.getType().isObstacle() && getRectangle().intersects(e.getRectangle()));
+        return MainFrame.me.objs.parallelStream().filter(e -> !equals(e) && (e instanceof BaseEnemy)).anyMatch(e -> e.getType().isObstacle() && getRectangle().intersects(e.getRectangle()));
     }
 
     @Override

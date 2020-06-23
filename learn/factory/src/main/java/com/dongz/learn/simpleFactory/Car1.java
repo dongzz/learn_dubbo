@@ -5,7 +5,7 @@ package com.dongz.learn.simpleFactory;
  * @time 2020/6/23 13:48
  * @desc
  */
-public class Car1 {
+public class Car1 implements Moveable{
     public void show() {
         System.out.println("car1");
     }

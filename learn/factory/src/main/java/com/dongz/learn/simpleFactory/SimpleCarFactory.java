@@ -6,11 +6,11 @@ package com.dongz.learn.simpleFactory;
  * @desc 简单工厂 可扩展性不高
  */
 public class SimpleCarFactory {
-    public static Car1 createCar1() {
+    public static Moveable createCar1() {
         return new Car1();
     }
 
-    public static Car2 createCar2() {
+    public static Moveable createCar2() {
         return new Car2();
     }
 }

@@ -2,8 +2,8 @@ package com.dongz.learn.abstractFactroy;
 
 import com.dongz.learn.abstractFactroy.enitiy.MagicStick;
 import com.dongz.learn.abstractFactroy.enitiy.MushRoom;
-import com.dongz.learn.abstractFactroy.enitiy.interfaces.Food;
-import com.dongz.learn.abstractFactroy.enitiy.interfaces.Weapon;
+import com.dongz.learn.abstractFactroy.enitiy.abstracts.Food;
+import com.dongz.learn.abstractFactroy.enitiy.abstracts.Weapon;
 
 /**
  * @Auth dz

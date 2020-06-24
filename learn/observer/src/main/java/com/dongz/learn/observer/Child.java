@@ -19,6 +19,8 @@ public class Child {
     {
         observers.add(new Dad());
         observers.add(new Mom());
+        // 函数式编程
+        observers.add((e) -> System.out.println("ppp" + e.getPlace()));
     }
 
     public void wakeUp() {
